@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
-project(blink1-lib)
+project(blink1-lib VERSION 1.0.0)
 
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
 
