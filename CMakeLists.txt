@@ -41,25 +41,6 @@ if (DEFINED USE_FAKE_BLINK1TOOL)
     )
 endif (DEFINED USE_FAKE_BLINK1TOOL)
 
-set(CXX_STANDARD_REQUIRED ON)
-set_property(TARGET ${EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
-
-###########
-# DOXYGEN #
-###########
-set(DOXYGEN_GENERATE_HTML YES)
-set(DOXYGEN_GENERATE_MAN YES)
-set(DOXYGEN_GENERATE_TREEVIEW YES)
-set(DOXYGEN_HTML_EXTRA_STYLESHEET "${LIB_DIR}/doxygen-awesome-css/doxygen-awesome.css")
-find_package(Doxygen)
-if (DOXYGEN_FOUND)
-    doxygen_add_docs(
-        doxygen
-        ${INCLUDE_DIR}
-        COMMENT "Generate documentation"
-    )
-endif(DOXYGEN_FOUND)
-
 ###############
 # BLINK1-TOOL #
 ###############
@@ -82,87 +63,106 @@ if (NOT DEFINED USE_FAKE_BLINK1TOOL)
     set(LIBRARIES ${LIBRARIES} libblink1)
 endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
 
-###########
-# Testing #
-###########
-add_subdirectory(${LIB_DIR}/googletest)
-include(GoogleTest)
-set(TEST_EXECUTABLE_NAME blink1_lib_test)
-set(TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(!hasParent)
 
-set(TEST_SOURCES
-    ${SOURCE_DIR}/FakeBlink1Lib.cpp
-    ${TEST_SOURCE_DIR}/Blink1Device_BadInit_test.cpp
-    ${TEST_SOURCE_DIR}/Blink1Device_Blocking_test.cpp
-    ${TEST_SOURCE_DIR}/Blink1Device_GoodInit_test.cpp
-    ${TEST_SOURCE_DIR}/Blink1Device_GoodInitBadFunction_test.cpp
-    ${TEST_SOURCE_DIR}/PatternLineN_test.cpp
-    ${TEST_SOURCE_DIR}/PatternLine_test.cpp
-    ${TEST_SOURCE_DIR}/PlayState_test.cpp
-    ${TEST_SOURCE_DIR}/RGBN_test.cpp
-    ${TEST_SOURCE_DIR}/RGB_test.cpp
-)
+    ###########
+    # DOXYGEN #
+    ###########
+    set(DOXYGEN_GENERATE_HTML YES)
+    set(DOXYGEN_GENERATE_MAN YES)
+    set(DOXYGEN_GENERATE_TREEVIEW YES)
+    set(DOXYGEN_HTML_EXTRA_STYLESHEET "${LIB_DIR}/doxygen-awesome-css/doxygen-awesome.css")
+    find_package(Doxygen)
+    if (DOXYGEN_FOUND)
+        doxygen_add_docs(
+            blink1_lib_doxygen
+            ${INCLUDE_DIR}
+            COMMENT "Generate documentation"
+        )
+    endif(DOXYGEN_FOUND)
 
-enable_testing()
-add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES} ${SOURCES})
-target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
-gtest_discover_tests(${TEST_EXECUTABLE_NAME})
-set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
+    ###########
+    # Testing #
+    ###########
+    add_subdirectory(${LIB_DIR}/googletest)
+    include(GoogleTest)
+    set(TEST_EXECUTABLE_NAME blink1_lib_test)
+    set(TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
-set(WARNINGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion")
-if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    # Set specific warnings if they ever exist
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    set(WARNINGS "${WARNINGS} -Wmisleading-indentation")
-endif()
-set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES COMPILE_FLAGS "${WARNINGS}")
-
-# Coverage
-if (CMAKE_BUILD_TYPE MATCHES Debug)
-    list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
-    include(CodeCoverage)
-
-    set(COVERAGE_EXCLUDES "/usr/*" "${LIB_DIR}/*" "${TEST_SOURCE_DIR}/*")
-    APPEND_COVERAGE_COMPILER_FLAGS()
-
-    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-        set(GCOV_PATH "${CMAKE_CURRENT_SOURCE_DIR}/scripts/llvm-cov.sh")
-        SETUP_TARGET_FOR_COVERAGE_LCOV(NAME coverage
-                                       EXECUTABLE ${TEST_EXECUTABLE_NAME}
-                                       DEPENDENCIES ${TEST_EXECUTABLE_NAME})
-    else()
-        SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage
-                                             EXECUTABLE ${TEST_EXECUTABLE_NAME}
-                                             DEPENDENCIES ${TEST_EXECUTABLE_NAME})
-    endif()
-
-    add_definitions(-DDEBUG_PRINTF)
-
-    set_target_properties(
-        ${EXECUTABLE_NAME}
-        PROPERTIES
-            CXX_CLANG_TIDY "clang-tidy"
+    set(TEST_SOURCES
+        ${SOURCE_DIR}/FakeBlink1Lib.cpp
+        ${TEST_SOURCE_DIR}/Blink1Device_BadInit_test.cpp
+        ${TEST_SOURCE_DIR}/Blink1Device_Blocking_test.cpp
+        ${TEST_SOURCE_DIR}/Blink1Device_GoodInit_test.cpp
+        ${TEST_SOURCE_DIR}/Blink1Device_GoodInitBadFunction_test.cpp
+        ${TEST_SOURCE_DIR}/PatternLineN_test.cpp
+        ${TEST_SOURCE_DIR}/PatternLine_test.cpp
+        ${TEST_SOURCE_DIR}/PlayState_test.cpp
+        ${TEST_SOURCE_DIR}/RGBN_test.cpp
+        ${TEST_SOURCE_DIR}/RGB_test.cpp
     )
 
-endif (CMAKE_BUILD_TYPE MATCHES Debug)
+    enable_testing()
+    add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES} ${SOURCES})
+    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
+    gtest_discover_tests(${TEST_EXECUTABLE_NAME})
+    set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
 
-################
-# OPTIMIZATION #
-################
-include(CheckIPOSupported)
-check_ipo_supported(RESULT ipo_supported OUTPUT error)
-if (ipo_supported)
-    message(STATUS "IPO/LTO enabled")
-    set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    set(WARNINGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion")
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        # Set specific warnings if they ever exist
+    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        set(WARNINGS "${WARNINGS} -Wmisleading-indentation")
+    endif()
+    set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES COMPILE_FLAGS "${WARNINGS}")
+
+    # Coverage
+    if (CMAKE_BUILD_TYPE MATCHES Debug)
+        list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
+        include(CodeCoverage)
+
+        set(COVERAGE_EXCLUDES "/usr/*" "${LIB_DIR}/*" "${TEST_SOURCE_DIR}/*")
+        APPEND_COVERAGE_COMPILER_FLAGS()
+
+        if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+            set(GCOV_PATH "${CMAKE_CURRENT_SOURCE_DIR}/scripts/llvm-cov.sh")
+            SETUP_TARGET_FOR_COVERAGE_LCOV(NAME coverage
+                                           EXECUTABLE ${TEST_EXECUTABLE_NAME}
+                                           DEPENDENCIES ${TEST_EXECUTABLE_NAME})
+        else()
+            SETUP_TARGET_FOR_COVERAGE_GCOVR_HTML(NAME coverage
+                                                 EXECUTABLE ${TEST_EXECUTABLE_NAME}
+                                                 DEPENDENCIES ${TEST_EXECUTABLE_NAME})
+        endif()
+
+        add_definitions(-DDEBUG_PRINTF)
+
+        set_target_properties(
+            ${EXECUTABLE_NAME}
+            PROPERTIES
+                CXX_CLANG_TIDY "clang-tidy"
+        )
+
+    endif (CMAKE_BUILD_TYPE MATCHES Debug)
+
+    ################
+    # OPTIMIZATION #
+    ################
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT ipo_supported OUTPUT error)
+    if (ipo_supported)
+        message(STATUS "IPO/LTO enabled")
+        set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    else()
+        message(STATUS "IPO/LTO not supported")
+    endif()
+
 else()
-    message(STATUS "IPO/LTO not supported")
-endif()
-
-###########
-# EXPORTS #
-###########
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(hasParent)
+    ###########
+    # EXPORTS #
+    ###########
+    set(BLINK1_LIB_INCLUDES ${INCLUDE_DIR} PARENT_SCOPE)
     set(BLINK1_LIB_SOURCES ${SOURCES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
-endif()
+endif(hasParent)
