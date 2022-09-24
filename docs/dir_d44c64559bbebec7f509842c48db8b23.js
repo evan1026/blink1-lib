@@ -1,5 +1,6 @@
 var dir_d44c64559bbebec7f509842c48db8b23 =
 [
+    [ "blink-lib.hpp", "blink-lib_8hpp.html", null ],
     [ "Blink1Device.hpp", "Blink1Device_8hpp.html", [
       [ "Blink1Device", "classblink1__lib_1_1Blink1Device.html", "classblink1__lib_1_1Blink1Device" ]
     ] ],
