@@ -6,7 +6,7 @@ TODO
 
 Artifacts
 -------------
-![](https://github.com/evan1026/blink1-lib/workflows/C/C++%20CI/badge.svg?branch=master)
+![](https://github.com/evan1026/blink1-lib/workflows/build/badge.svg?branch=master)
 
 [Code Coverage](coverage/index.html)
 
