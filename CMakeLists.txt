@@ -41,6 +41,8 @@ if (DEFINED USE_FAKE_BLINK1TOOL)
     )
 endif (DEFINED USE_FAKE_BLINK1TOOL)
 
+set(CXX_STANDARD_REQUIRED yes)
+
 ###############
 # BLINK1-TOOL #
 ###############
@@ -108,7 +110,6 @@ if(NOT hasParent)
     target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
-    set(CXX_STANDARD_REQUIRED yes)
 
     set(WARNINGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -164,6 +165,7 @@ else()
     # EXPORTS #
     ###########
     add_library(blink1-lib STATIC ${SOURCES})
+    set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
     set(BLINK1_LIB_INCLUDES ${INCLUDE_DIR} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
 endif(NOT hasParent)
