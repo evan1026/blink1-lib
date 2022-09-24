@@ -64,7 +64,7 @@ if (NOT DEFINED USE_FAKE_BLINK1TOOL)
 endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
-if(!hasParent)
+if(NOT hasParent)
 
     ###########
     # DOXYGEN #
@@ -165,4 +165,4 @@ else()
     set(BLINK1_LIB_INCLUDES ${INCLUDE_DIR} PARENT_SCOPE)
     set(BLINK1_LIB_SOURCES ${SOURCES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
-endif(hasParent)
+endif(NOT hasParent)
