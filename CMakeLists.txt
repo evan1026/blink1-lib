@@ -162,7 +162,7 @@ else()
     ###########
     # EXPORTS #
     ###########
+    add_library(blink1-lib STATIC ${SOURCES})
     set(BLINK1_LIB_INCLUDES ${INCLUDE_DIR} PARENT_SCOPE)
-    set(BLINK1_LIB_SOURCES ${SOURCES} PARENT_SCOPE)
-    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
+    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
 endif(NOT hasParent)
