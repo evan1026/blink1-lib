@@ -23,7 +23,7 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${INCLUDE_DIR})
 
-set(BLINK1_LIB_SOURCES
+set(SOURCES
     ${SOURCE_DIR}/Blink1Device.cpp
     ${SOURCE_DIR}/PatternLine.cpp
     ${SOURCE_DIR}/PatternLineN.cpp
@@ -31,12 +31,12 @@ set(BLINK1_LIB_SOURCES
     ${SOURCE_DIR}/RGB.cpp
     ${SOURCE_DIR}/RGBN.cpp
 )
-set(BLINK1_LIB_LIBRARIES "")
+set(LIBRARIES "")
 
 if (DEFINED USE_FAKE_BLINK1TOOL)
     add_definitions(-DUSE_FAKE_BLINK1TOOL)
-    set(BLINK1_LIB_SOURCES
-        ${BLINK1_LIB_SOURCES}
+    set(SOURCES
+        ${SOURCES}
         ${SOURCE_DIR}/FakeBlink1Lib.cpp
     )
 endif (DEFINED USE_FAKE_BLINK1TOOL)
@@ -79,7 +79,7 @@ set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
 
 if (NOT DEFINED USE_FAKE_BLINK1TOOL)
-    set(BLINK1_LIB_LIBRARIES ${BLINK1_LIB_LIBRARIES} libblink1)
+    set(LIBRARIES ${LIBRARIES} libblink1)
 endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
 
 ###########
@@ -104,7 +104,7 @@ set(TEST_SOURCES
 )
 
 enable_testing()
-add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES} ${BLINK1_LIB_SOURCES})
+add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES} ${SOURCES})
 target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
 gtest_discover_tests(${TEST_EXECUTABLE_NAME})
 set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
@@ -122,7 +122,7 @@ if (CMAKE_BUILD_TYPE MATCHES Debug)
     list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
     include(CodeCoverage)
 
-    set(COVERAGE_EXCLUDES "/usr/*" "${LIB_DIR}/*" "${TEST_SOURCE_DIR}/*" "${SOURCE_DIR}/main.cpp")
+    set(COVERAGE_EXCLUDES "/usr/*" "${LIB_DIR}/*" "${TEST_SOURCE_DIR}/*")
     APPEND_COVERAGE_COMPILER_FLAGS()
 
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
@@ -158,3 +158,11 @@ else()
     message(STATUS "IPO/LTO not supported")
 endif()
 
+###########
+# EXPORTS #
+###########
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(hasParent)
+    set(BLINK1_LIB_SOURCES ${SOURCES} PARENT_SCOPE)
+    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
+endif()
