@@ -108,6 +108,7 @@ if(NOT hasParent)
     target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
+    set(CXX_STANDARD_REQUIRED yes)
 
     set(WARNINGS "-Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wsign-conversion")
     if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
