@@ -44,9 +44,9 @@ endif (DEFINED USE_FAKE_BLINK1TOOL)
 
 set(CXX_STANDARD_REQUIRED yes)
 
-add_library(blink1-lib STATIC ${SOURCES})
-add_library(blink1-testing-lib STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
-set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
+add_library(blink1 STATIC ${SOURCES})
+add_library(blink1-testing STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
+set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
 
 ###############
 # BLINK1-TOOL #
@@ -111,7 +111,7 @@ if(NOT hasParent)
 
     enable_testing()
     add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES})
-    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main blink1-lib blink1-testing-lib)
+    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main blink1 blink1-testing)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
 
