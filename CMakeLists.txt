@@ -44,6 +44,10 @@ endif (DEFINED USE_FAKE_BLINK1TOOL)
 
 set(CXX_STANDARD_REQUIRED yes)
 
+add_library(blink1-lib STATIC ${SOURCES})
+add_library(blink1-testing-lib STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
+set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
+
 ###############
 # BLINK1-TOOL #
 ###############
@@ -94,7 +98,6 @@ if(NOT hasParent)
     set(TEST_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 
     set(TEST_SOURCES
-        ${SOURCE_DIR}/FakeBlink1Lib.cpp
         ${TEST_SOURCE_DIR}/Blink1Device_BadInit_test.cpp
         ${TEST_SOURCE_DIR}/Blink1Device_Blocking_test.cpp
         ${TEST_SOURCE_DIR}/Blink1Device_GoodInit_test.cpp
@@ -107,8 +110,8 @@ if(NOT hasParent)
     )
 
     enable_testing()
-    add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES} ${SOURCES})
-    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main)
+    add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES})
+    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main blink1-lib blink1-testing-lib)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
 
@@ -120,7 +123,9 @@ if(NOT hasParent)
     endif()
     set_target_properties(${TEST_EXECUTABLE_NAME} PROPERTIES COMPILE_FLAGS "${WARNINGS}")
 
-    # Coverage
+    ############
+    # COVERAGE #
+    ############
     if (CMAKE_BUILD_TYPE MATCHES Debug)
         list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake-modules")
         include(CodeCoverage)
@@ -165,9 +170,6 @@ else()
     ###########
     # EXPORTS #
     ###########
-    add_library(blink1-lib STATIC ${SOURCES})
-    add_library(blink1-testing-lib STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
-    set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
 endif(NOT hasParent)
