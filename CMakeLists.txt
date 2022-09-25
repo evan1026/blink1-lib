@@ -33,19 +33,11 @@ set(SOURCES
     ${SOURCE_DIR}/RGBN.cpp
 )
 
-if (DEFINED USE_FAKE_BLINK1TOOL)
-    add_definitions(-DUSE_FAKE_BLINK1TOOL)
-    set(SOURCES
-        ${SOURCES}
-        ${SOURCE_DIR}/FakeBlink1Lib.cpp
-    )
-endif (DEFINED USE_FAKE_BLINK1TOOL)
-
 set(CXX_STANDARD_REQUIRED yes)
 
 add_library(blink1 STATIC ${SOURCES})
 add_library(blink1-testing STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
-set(LIBRARIES blink1 blink1-testing)
+set(LIBRARIES blink1)
 
 set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
 
@@ -67,9 +59,14 @@ set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
 include_directories(${INCLUDES})
 
-if (NOT DEFINED USE_FAKE_BLINK1TOOL)
+if (USE_FAKE_BLINK1TOOL)
+    add_definitions(-DUSE_FAKE_BLINK1TOOL)
+    set(LIBRARIES ${LIBRARIES} blink1-testing)
+else (USE_FAKE_BLINK1TOOL)
     set(LIBRARIES ${LIBRARIES} libblink1)
-endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
+endif (USE_FAKE_BLINK1TOOL)
+
+set(TESTING_LIBRARIES blink1-testing)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
@@ -173,4 +170,5 @@ else()
     ###########
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
+    set(BLINK1_LIB_TESTING_LIBRARIES ${TESTING_LIBRARIES PARENT_SCOPE)
 endif(NOT hasParent)
