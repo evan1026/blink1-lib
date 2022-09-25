@@ -21,7 +21,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAG_RELEASE} -O3")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -DDEBUG -g")
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
-include_directories(${INCLUDE_DIR})
+
+set(INCLUDES ${INCLUDE_DIR})
 
 set(SOURCES
     ${SOURCE_DIR}/Blink1Device.cpp
@@ -48,10 +49,9 @@ set(CXX_STANDARD_REQUIRED yes)
 ###############
 set(BLINK1_DIR ${LIB_DIR}/blink1-tool)
 set(LIB_BLINK1_LOC ${BLINK1_DIR}/libblink1.so)
+set(INCLUDES ${INCLUDES} ${BLINK1_DIR} ${BLINK1_DIR}/hidapi/hidapi)
 
 add_definitions(-DUSE_HIDAPI)
-include_directories(${BLINK1_DIR})
-include_directories(${BLINK1_DIR}/hidapi/hidapi)
 
 add_custom_command(OUTPUT ${LIB_BLINK1_LOC}
                    COMMAND $(MAKE) lib
@@ -67,6 +67,8 @@ endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
+
+    include_directories(${INCLUDES})
 
     ###########
     # DOXYGEN #
@@ -166,6 +168,6 @@ else()
     ###########
     add_library(blink1-lib STATIC ${SOURCES})
     set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
-    set(BLINK1_LIB_INCLUDES ${INCLUDE_DIR} PARENT_SCOPE)
+    set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
 endif(NOT hasParent)
