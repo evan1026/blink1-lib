@@ -166,6 +166,7 @@ else()
     # EXPORTS #
     ###########
     add_library(blink1-lib STATIC ${SOURCES})
+    add_library(blink1-testing-lib STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
     set_property(TARGET blink1-lib PROPERTY CXX_STANDARD 20)
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
