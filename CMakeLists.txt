@@ -59,14 +59,8 @@ set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
 include_directories(${INCLUDES})
 
-if (USE_FAKE_BLINK1TOOL)
-    add_definitions(-DUSE_FAKE_BLINK1TOOL)
-    set(LIBRARIES ${LIBRARIES} blink1-testing)
-else (USE_FAKE_BLINK1TOOL)
-    set(LIBRARIES ${LIBRARIES} libblink1)
-endif (USE_FAKE_BLINK1TOOL)
-
-set(TESTING_LIBRARIES blink1-testing)
+set(TESTING_LIBRARIES ${LIBRARIES} blink1-testing)
+set(LIBRARIES ${LIBRARIES} libblink1)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
@@ -109,7 +103,7 @@ if(NOT hasParent)
 
     enable_testing()
     add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES})
-    target_link_libraries(${TEST_EXECUTABLE_NAME} gtest gtest_main gmock gmock_main blink1 blink1-testing)
+    target_link_libraries(${TEST_EXECUTABLE_NAME} ${TESTING_LIBRARIES} gtest gtest_main gmock gmock_main)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
 
