@@ -78,7 +78,7 @@ if(NOT hasParent)
     find_package(Doxygen)
     if (DOXYGEN_FOUND)
         doxygen_add_docs(
-            blink1_lib_doxygen
+            doxygen
             ${INCLUDE_DIR}
             COMMENT "Generate documentation"
         )
