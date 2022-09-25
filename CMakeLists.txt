@@ -32,7 +32,6 @@ set(SOURCES
     ${SOURCE_DIR}/RGB.cpp
     ${SOURCE_DIR}/RGBN.cpp
 )
-set(LIBRARIES "")
 
 if (DEFINED USE_FAKE_BLINK1TOOL)
     add_definitions(-DUSE_FAKE_BLINK1TOOL)
@@ -46,6 +45,8 @@ set(CXX_STANDARD_REQUIRED yes)
 
 add_library(blink1 STATIC ${SOURCES})
 add_library(blink1-testing STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
+set(LIBRARIES blink1 blink1-testing)
+
 set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
 
 ###############
@@ -171,5 +172,5 @@ else()
     # EXPORTS #
     ###########
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
-    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} blink1-lib PARENT_SCOPE)
+    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
 endif(NOT hasParent)
