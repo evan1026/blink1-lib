@@ -1,14 +1,14 @@
 /**
  * @file blink-lib.hpp
- * @brief Header file for blink1_lib
+ * @brief Header file for blink1-lib
  *
- * Including this file will give access to all classes within blink1_lib
+ * Including this file will give access to all classes within blink1-lib
  */
 #pragma once
 
-#include "blink-lib/Blink1Device.hpp"
-#include "blink-lib/PatternLine.hpp"
-#include "blink-lib/PatternLineN.hpp"
-#include "blink-lib/RGB.hpp"
-#include "blink-lib/RGBN.hpp"
+#include "Blink1Device.hpp"
+#include "PatternLine.hpp"
+#include "PatternLineN.hpp"
+#include "RGB.hpp"
+#include "RGBN.hpp"
 
