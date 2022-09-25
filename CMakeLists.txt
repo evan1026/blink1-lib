@@ -60,6 +60,7 @@ add_custom_target(libblink1_target DEPENDS ${LIB_BLINK1_LOC})
 add_library(libblink1 STATIC IMPORTED GLOBAL)
 set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
+include_directories(${INCLUDES})
 
 if (NOT DEFINED USE_FAKE_BLINK1TOOL)
     set(LIBRARIES ${LIBRARIES} libblink1)
@@ -67,8 +68,6 @@ endif (NOT DEFINED USE_FAKE_BLINK1TOOL)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-
-    include_directories(${INCLUDES})
 
     ###########
     # DOXYGEN #
