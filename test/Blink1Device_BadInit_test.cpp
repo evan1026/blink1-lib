@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 #include "Blink1Device.hpp"
-#include "FakeBlink1Lib.hpp"
+#include "Blink1TestingLibrary.hpp"
 
 using namespace blink1_lib;
 

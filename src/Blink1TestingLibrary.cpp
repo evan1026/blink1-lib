@@ -26,7 +26,7 @@
 #include "RGB.hpp"
 #include "PlayState.hpp"
 #include "PatternLineN.hpp"
-#include "FakeBlink1Lib.hpp"
+#include "Blink1TestingLibrary.hpp"
 
 using namespace blink1_lib;
 

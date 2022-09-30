@@ -9,12 +9,12 @@
 
 /**
  * @mainpage Blink1 Lib
- * @section classes Classes
  *
  * This library provides a C++ wrapper around the blink1-lib C library
  *
- * Main class:
- *     - blink1_lib::Blink1Device
+ * Main class: blink1_lib::Blink1Device
+ *
+ * Also of note is the testing library: fake_blink1_lib
  */
 
 /**

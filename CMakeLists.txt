@@ -36,7 +36,7 @@ set(SOURCES
 set(CXX_STANDARD_REQUIRED yes)
 
 add_library(blink1 STATIC ${SOURCES})
-add_library(blink1-testing STATIC ${SOURCE_DIR}/FakeBlink1Lib.cpp)
+add_library(blink1-testing STATIC ${SOURCE_DIR}/Blink1TestingLibrary.cpp)
 set(LIBRARIES blink1)
 
 set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
