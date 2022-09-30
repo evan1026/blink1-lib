@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['hid_5fdevice_5f_66',['hid_device_',['../structhid__device__.html',1,'']]]
+  ['patternline_86',['PatternLine',['../structblink1__lib_1_1PatternLine.html',1,'blink1_lib']]],
+  ['patternlinen_87',['PatternLineN',['../structblink1__lib_1_1PatternLineN.html',1,'blink1_lib']]],
+  ['playstate_88',['PlayState',['../structblink1__lib_1_1PlayState.html',1,'blink1_lib']]]
 ];

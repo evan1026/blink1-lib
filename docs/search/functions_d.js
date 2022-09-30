@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['_7eblink1device_118',['~Blink1Device',['../classblink1__lib_1_1Blink1Device.html#afde88b5a1e3df6d1a04d95ac5a36b166',1,'blink1_lib::Blink1Device']]]
+  ['writepatternline_156',['writePatternLine',['../classblink1__lib_1_1Blink1Device.html#af517adc1d53c93adf0409072cf089fbc',1,'blink1_lib::Blink1Device']]],
+  ['writepatternlinen_157',['writePatternLineN',['../classblink1__lib_1_1Blink1Device.html#ad2a8e343bd086da860e31af4ac13c06c',1,'blink1_lib::Blink1Device']]]
 ];

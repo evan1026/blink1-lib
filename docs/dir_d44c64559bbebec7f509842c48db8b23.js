@@ -4,8 +4,8 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "Blink1Device.hpp", "Blink1Device_8hpp.html", [
       [ "Blink1Device", "classblink1__lib_1_1Blink1Device.html", "classblink1__lib_1_1Blink1Device" ]
     ] ],
+    [ "Blink1TestingLibrary.hpp", "Blink1TestingLibrary_8hpp.html", "Blink1TestingLibrary_8hpp" ],
     [ "Documentation.hpp", "Documentation_8hpp.html", null ],
-    [ "FakeBlink1Lib.hpp", "FakeBlink1Lib_8hpp_source.html", null ],
     [ "PatternLine.hpp", "PatternLine_8hpp.html", [
       [ "PatternLine", "structblink1__lib_1_1PatternLine.html", "structblink1__lib_1_1PatternLine" ]
     ] ],

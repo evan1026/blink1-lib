@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enabledegamma_84',['enableDegamma',['../classblink1__lib_1_1Blink1Device.html#af83a28e35ffb826831bf820158284ca1',1,'blink1_lib::Blink1Device']]]
+  ['disabledegamma_106',['disableDegamma',['../classblink1__lib_1_1Blink1Device.html#af39eb9027366a50ec74f144e4b775bdd',1,'blink1_lib::Blink1Device']]]
 ];

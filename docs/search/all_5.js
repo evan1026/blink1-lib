@@ -1,8 +1,7 @@
 var searchData=
 [
-  ['g_15',['g',['../structblink1__lib_1_1RGB.html#a354e0a2b9afed5d16ea9c68b54ea4245',1,'blink1_lib::RGB::g()'],['../structblink1__lib_1_1RGBN.html#af3664acc7f76e73132ae19b854516b68',1,'blink1_lib::RGBN::g()']]],
-  ['getcacheindex_16',['getCacheIndex',['../classblink1__lib_1_1Blink1Device.html#aac7cd764298898fb85777272989fa18d',1,'blink1_lib::Blink1Device']]],
-  ['getserial_17',['getSerial',['../classblink1__lib_1_1Blink1Device.html#a01c609d20364dda29146320d0ac6212a',1,'blink1_lib::Blink1Device']]],
-  ['getversion_18',['getVersion',['../classblink1__lib_1_1Blink1Device.html#ac13669a77e93e4e9c8d022007ce059c0',1,'blink1_lib::Blink1Device']]],
-  ['good_19',['good',['../classblink1__lib_1_1Blink1Device.html#abe2a82f788512bc4b84448e77b4ea6dd',1,'blink1_lib::Blink1Device']]]
+  ['fademillis_15',['fadeMillis',['../structblink1__lib_1_1PatternLine.html#a955178d139ec7862da15912584be7847',1,'blink1_lib::PatternLine::fadeMillis()'],['../structblink1__lib_1_1PatternLineN.html#a64c0e437dae9eb8729bcf7ad0fe32375',1,'blink1_lib::PatternLineN::fadeMillis()']]],
+  ['fadetorgb_16',['fadeToRGB',['../classblink1__lib_1_1Blink1Device.html#a19cf9f9d96b35564fb07219a1c71fca0',1,'blink1_lib::Blink1Device']]],
+  ['fadetorgbn_17',['fadeToRGBN',['../classblink1__lib_1_1Blink1Device.html#a8bc50bc20984536a7e021554f8e25067',1,'blink1_lib::Blink1Device']]],
+  ['fake_5fblink1_5flib_18',['fake_blink1_lib',['../namespacefake__blink1__lib.html',1,'']]]
 ];
