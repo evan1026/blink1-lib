@@ -1,4 +1,4 @@
-name: "Build and Create Prerelease"
+name: "Build"
 
 on:
   push:
@@ -88,7 +88,7 @@ jobs:
       - name: Upload library files
         uses: actions/upload-artifact@v3
         with:
-          name: Static Libraries
+          name: Static_Libraries
           path: "${{ runner.temp }}/lib*.a"
   build-shared:
     name: Build Shared Library Files
@@ -109,7 +109,7 @@ jobs:
       - name: Upload library files
         uses: actions/upload-artifact@v3
         with:
-          name: Shared Libraries
+          name: Shared_Libraries
           path: "${{ runner.temp }}/lib*.so"
   upload-headers:
     name: Upload Header Files
@@ -119,6 +119,29 @@ jobs:
       - name: Upload headers
         uses: actions/upload-artifact@v3
         with:
-          name: Header Files
+          name: Header_Files
           path: "${{ github.workspace }}/include"
+  create-prerelease:
+    name: Create Pre-Release
+    runs-on: ubunutu-latest
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+      - name: Make static tarball
+        run: cd "${{ github.workspace }}/Static_Libraries" && tar -czvf static_libraries.tar.gz * && mv static_libraries.tar.gz ../
+      - name: Make shared tarball
+        run: cd "${{ github.workspace }}/Shared_Libraries" && tar -czvf shared_libraries.tar.gz * && mv shared_libraries.tar.gz ../
+      - name: Make header tarball
+        run: cd "${{ github.workspace }}/Header_Files" && tar -czvf header_files.tar.gz * && mv header_files.tar.gz ../
+      - name: Create pre-release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Development Build"
+          files: |
+            static_libraries.tar.gz
+            shared_libraries.tar.gz
+            header_files.tar.gz
 
