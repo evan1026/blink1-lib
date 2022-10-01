@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  DEPENDENCIES: libusb-1.0-0-dev libudev-dev gcovr cmake doxygen dot
+  DEPENDENCIES: libusb-1.0-0-dev libudev-dev gcovr cmake doxygen xdot
 
 jobs:
   coverage:
