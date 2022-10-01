@@ -106,6 +106,9 @@ jobs:
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v3
+      - name: Get tag name
+        id: get-tag-name
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Make static tarball
         run: cd "${{ github.workspace }}/Static_Libraries" && tar -czvf static_libraries.tar.gz * && mv static_libraries.tar.gz ../
       - name: Make shared tarball
@@ -120,9 +123,8 @@ jobs:
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: latest
-          prerelease: true
-          title: "Development Build"
+          prerelease: false
+          title: "Release ${{ steps.get-tag-name.outputs.tag }}"
           files: |
             static_libraries.tar.gz
             shared_libraries.tar.gz
