@@ -123,7 +123,7 @@ jobs:
           path: "${{ github.workspace }}/include"
   create-prerelease:
     name: Create Pre-Release
-    runs-on: ubunutu-latest
+    runs-on: ubuntu-latest
     needs: [build-static, build-shared, upload-headers, docs, coverage]
     steps:
       - name: Download artifacts
