@@ -1,0 +1,7 @@
+<map id="include/RGB.hpp" name="include/RGB.hpp">
+<area shape="rect" id="node1" title="Header file for blink1_lib::RGB." alt="" coords="187,5,317,32"/>
+<area shape="rect" id="node2" href="$PatternLine_8hpp.html" title="Header file for blink1_lib::PatternLine." alt="" coords="102,80,277,107"/>
+<area shape="rect" id="node3" href="$Blink1Device_8hpp.html" title="Header file for blink1_lib::Blink1Device." alt="" coords="5,155,192,181"/>
+<area shape="rect" id="node4" href="$blink-lib_8hpp.html" title="Header file for blink1&#45;lib." alt="" coords="152,229,307,256"/>
+<area shape="rect" id="node5" href="$Blink1TestingLibrary_8hpp.html" title="Provides functions to control a simulated blink(1) device for testing." alt="" coords="353,80,583,107"/>
+</map>

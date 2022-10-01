@@ -1,0 +1,7 @@
+<map id="include/RGBN.hpp" name="include/RGBN.hpp">
+<area shape="rect" id="node1" title="Header file for blink1_lib::RGBN." alt="" coords="160,5,299,32"/>
+<area shape="rect" id="node2" href="$PatternLineN_8hpp.html" title="Header file for blink1_lib::PatternLineN." alt="" coords="137,80,321,107"/>
+<area shape="rect" id="node3" href="$Blink1Device_8hpp.html" title="Header file for blink1_lib::Blink1Device." alt="" coords="5,155,192,181"/>
+<area shape="rect" id="node4" href="$blink-lib_8hpp.html" title="Header file for blink1&#45;lib." alt="" coords="152,229,307,256"/>
+<area shape="rect" id="node5" href="$Blink1TestingLibrary_8hpp.html" title="Provides functions to control a simulated blink(1) device for testing." alt="" coords="267,155,498,181"/>
+</map>
