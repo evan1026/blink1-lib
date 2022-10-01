@@ -1,0 +1,132 @@
+name: "Create Release"
+
+on:
+  push:
+    tags:
+      - "v*"
+
+env:
+  DEPENDENCIES: libusb-1.0-0-dev libudev-dev gcovr cmake doxygen xdot
+
+jobs:
+  coverage:
+    name: Generate Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: sudo apt update -m && sudo apt install $DEPENDENCIES
+        shell: bash
+      - name: Run CMake
+        run: cd "${{ runner.temp }}" && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug "${{ github.workspace }}"
+      - name: Generate coverage
+        run: cd "${{ runner.temp }}" && make coverage
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Code_Coverage_Report
+          path: "${{ runner.temp }}/coverage"
+  docs:
+    name: Generate Doxygen Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: sudo apt update -m && sudo apt install $DEPENDENCIES
+        shell: bash
+      - name: Run CMake
+        run: cd "${{ runner.temp }}" && cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Debug "${{ github.workspace }}"
+      - name: Generate docs
+        run: cd "${{ runner.temp }}" && make doxygen
+      - name: Upload docs
+        uses: actions/upload-artifact@v3
+        with:
+          name: Doxygen_Docs
+          path: "${{ runner.temp }}/html"
+  build-static:
+    name: Build Static Library Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: sudo apt update -m && sudo apt install $DEPENDENCIES
+        shell: bash
+      - name: Generate buildfiles
+        run: cd "${{ runner.temp }}" && cmake -G "Unix Makefiles" -DBLINK1_LIB_BUILD_STATIC=ON "${{ github.workspace }}"
+      - name: Build library
+        run: cd "${{ runner.temp }}" && make
+      - name: Run tests
+        run: cd "${{ runner.temp }}" && make test
+      - name: Upload library files
+        uses: actions/upload-artifact@v3
+        with:
+          name: Static_Libraries
+          path: "${{ runner.temp }}/lib*.a"
+  build-shared:
+    name: Build Shared Library Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: true
+      - name: Install dependencies
+        run: sudo apt update -m && sudo apt install $DEPENDENCIES
+        shell: bash
+      - name: Generate buildfiles
+        run: cd "${{ runner.temp }}" && cmake -G "Unix Makefiles" -DBLINK1_LIB_BUILD_SHARED=ON "${{ github.workspace }}"
+      - name: Build library
+        run: cd "${{ runner.temp }}" && make
+      - name: Run tests
+        run: cd "${{ runner.temp }}" && make test
+      - name: Upload library files
+        uses: actions/upload-artifact@v3
+        with:
+          name: Shared_Libraries
+          path: "${{ runner.temp }}/lib*.so"
+  upload-headers:
+    name: Upload Header Files
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Upload headers
+        uses: actions/upload-artifact@v3
+        with:
+          name: Header_Files
+          path: "${{ github.workspace }}/include"
+  create-prerelease:
+    name: Create Pre-Release
+    runs-on: ubuntu-latest
+    needs: [build-static, build-shared, upload-headers, docs, coverage]
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+      - name: Make static tarball
+        run: cd "${{ github.workspace }}/Static_Libraries" && tar -czvf static_libraries.tar.gz * && mv static_libraries.tar.gz ../
+      - name: Make shared tarball
+        run: cd "${{ github.workspace }}/Shared_Libraries" && tar -czvf shared_libraries.tar.gz * && mv shared_libraries.tar.gz ../
+      - name: Make header tarball
+        run: cd "${{ github.workspace }}/Header_Files" && tar -czvf header_files.tar.gz * && mv header_files.tar.gz ../
+      - name: Make coverage tarball
+        run: cd "${{ github.workspace }}/Code_Coverage_Report" && tar -czvf code_coverage.tar.gz && mv code_coverage.tar.gz ../
+      - name: Make docs tarball
+        run: cd "${{ github.workspace }}/Doxygen_Docs" && tar -czvf docs.tar.gz && mv docs.tar.gz ../
+      - name: Create pre-release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: latest
+          prerelease: true
+          title: "Development Build"
+          files: |
+            static_libraries.tar.gz
+            shared_libraries.tar.gz
+            header_files.tar.gz
+            code_coverage.tar.gz
+            docs.tar.gz
+
