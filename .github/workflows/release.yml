@@ -116,9 +116,9 @@ jobs:
       - name: Make header tarball
         run: cd "${{ github.workspace }}/Header_Files" && tar -czvf header_files.tar.gz * && mv header_files.tar.gz ../
       - name: Make coverage tarball
-        run: cd "${{ github.workspace }}/Code_Coverage_Report" && tar -czvf code_coverage.tar.gz && mv code_coverage.tar.gz ../
+        run: cd "${{ github.workspace }}/Code_Coverage_Report" && tar -czvf code_coverage.tar.gz * && mv code_coverage.tar.gz ../
       - name: Make docs tarball
-        run: cd "${{ github.workspace }}/Doxygen_Docs" && tar -czvf docs.tar.gz && mv docs.tar.gz ../
+        run: cd "${{ github.workspace }}/Doxygen_Docs" && tar -czvf docs.tar.gz * && mv docs.tar.gz ../
       - name: Create pre-release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
