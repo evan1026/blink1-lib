@@ -7,9 +7,12 @@ development of C++ code that interfaces with the [blink(1)](https://blink1.thing
 as compared to [the official blink1-tool C library](https://github.com/todbot/blink1-tool).
 
 ## Usage
-At the moment, the only way to use this library is to include it as a CMake
-subdirectory. I have future plans to create releases with static and dynamic
-library files, as well as possibly a header-only release.
+Currently, this library supports being a CMake subdirectory, as well as building against shared or static
+library files which can be found in the releases tab. I may also create a header-only version in the future for
+those who prefer that.
+
+### Shared or Static Library
+Each release contains tar files with headers and library files which can be linked to your project.
 
 ### CMake Subdirectory
 When included in a CMake project, this library will export a few variables:
@@ -29,6 +32,9 @@ include_directories(${BLINK1_LIB_INCLUDES})
 target_link_libraries(${EXECUTABLE_NAME} ${BLINK1_LIB_LIBRARIES})
 target_link_libraries(${TEST_EXECUTABLE_NAME} ${BLINK1_LIB_TESTING_LIBRARIES})
 ```
+
+By default, when this library is built as a subdirectory, it will build static libraries.
+This behavior can be changed by setting the `BLINK1_LIB_BUILD_SHARED` option.
 
 ## Testing Library
 In addition to providing a wrapper around the blink1-tool library, this project
