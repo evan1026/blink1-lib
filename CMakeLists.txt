@@ -14,6 +14,20 @@ endif (CMAKE_BUILD_TYPE MATCHES Debug)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS yes)
 
+get_directory_property(HAS_PARENT PARENT_DIRECTORY)
+option(BLINK1_LIB_BUILD_STATIC no)
+option(BLINK1_LIB_BUILD_SHARED no)
+
+if ((HAS_PARENT OR BLINK1_LIB_BUILD_STATIC) AND NOT BLINK1_LIB_BUILD_SHARED)
+    set(LIBRARY_TYPE STATIC)
+elseif ((NOT HAS_PARENT OR BLINK1_LIB_BUILD_SHARED) AND NOT BLINK1_LIB_BUILD_STATIC)
+    set(LIBRARY_TYPE SHARED)
+else()
+    message(FATAL_ERROR "Must set exactly 1 of BLINK1_LIB_BUILD_SHARED or BLINK1_LIB_BUILD_STATIC, or neither of them.")
+endif()
+
+message("-- Library type: ${LIBRARY_TYPE}")
+
 ##############
 # BLINK1-LIB #
 ##############
@@ -35,8 +49,8 @@ set(SOURCES
 
 set(CXX_STANDARD_REQUIRED yes)
 
-add_library(blink1 STATIC ${SOURCES})
-add_library(blink1-testing STATIC ${SOURCE_DIR}/Blink1TestingLibrary.cpp)
+add_library(blink1 ${LIBRARY_TYPE} ${SOURCES})
+add_library(blink1-testing ${LIBRARY_TYPE} ${SOURCE_DIR}/Blink1TestingLibrary.cpp)
 set(LIBRARIES blink1)
 
 set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
@@ -62,8 +76,7 @@ include_directories(${INCLUDES})
 set(TESTING_LIBRARIES ${LIBRARIES} blink1-testing)
 set(LIBRARIES ${LIBRARIES} libblink1)
 
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
+if(NOT HAS_PARENT)
 
     ###########
     # DOXYGEN #
@@ -165,4 +178,4 @@ else()
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
     set(BLINK1_LIB_TESTING_LIBRARIES ${TESTING_LIBRARIES} PARENT_SCOPE)
-endif(NOT hasParent)
+endif(NOT HAS_PARENT)
