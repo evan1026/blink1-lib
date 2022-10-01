@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  DEPENDENCIES: libusb-1.0-0-dev libudev-dev gcovr cmake doxygen
+  DEPENDENCIES: libusb-1.0-0-dev libudev-dev gcovr cmake doxygen dot
 
 jobs:
   coverage:
@@ -109,7 +109,7 @@ jobs:
       - name: Upload library files
         uses: actions/upload-artifact@v3
         with:
-          name: Static Libraries
+          name: Shared Libraries
           path: "${{ runner.temp }}/lib*.so"
   upload-headers:
     name: Upload Header Files
