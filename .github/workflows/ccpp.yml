@@ -124,6 +124,7 @@ jobs:
   create-prerelease:
     name: Create Pre-Release
     runs-on: ubunutu-latest
+    needs: [build-static, build-shared, upload-headers, docs, coverage]
     steps:
       - name: Download artifacts
         uses: actions/download-artifact@v3
