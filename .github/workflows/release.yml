@@ -119,7 +119,7 @@ jobs:
         run: cd "${{ github.workspace }}/Code_Coverage_Report" && tar -czvf code_coverage.tar.gz * && mv code_coverage.tar.gz ../
       - name: Make docs tarball
         run: cd "${{ github.workspace }}/Doxygen_Docs" && tar -czvf docs.tar.gz * && mv docs.tar.gz ../
-      - name: Create pre-release
+      - name: Create release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
