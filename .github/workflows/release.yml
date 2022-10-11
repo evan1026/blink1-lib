@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
       - name: Install dependencies
         run: sudo apt update -m && sudo apt install $DEPENDENCIES
         shell: bash
@@ -34,7 +34,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
       - name: Install dependencies
         run: sudo apt update -m && sudo apt install $DEPENDENCIES
         shell: bash
@@ -53,7 +53,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
       - name: Install dependencies
         run: sudo apt update -m && sudo apt install $DEPENDENCIES
         shell: bash
@@ -74,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          submodules: true
+          submodules: recursive
       - name: Install dependencies
         run: sudo apt update -m && sudo apt install $DEPENDENCIES
         shell: bash
