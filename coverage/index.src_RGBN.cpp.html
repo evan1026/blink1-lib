@@ -269,13 +269,13 @@
             <td class="headerValue">src/RGBN.cpp</td>
             <td></td>
             <td class="headerName">Lines:</td>
-            <td class="headerTableEntry">9</td>
-            <td class="headerTableEntry">9</td>
+            <td class="headerTableEntry">12</td>
+            <td class="headerTableEntry">12</td>
             <td class="headerTableEntry" style="background-color:LightGreen">100.0 %</td>
           </tr>
           <tr>
             <td class="headerName">Date:</td>
-            <td class="headerValue">2022-10-11 06:57:12</td>
+            <td class="headerValue">2022-10-11 07:18:13</td>
             <td></td>
             <td class="headerName">Branches:</td>
             <td class="headerTableEntry">8</td>
@@ -408,25 +408,46 @@
     <td align="right" class="lineno"><pre>16</pre></td>
     <td align="right" class="linebranch"></td>
     <td align="right" class="linecount coveredLine"><pre>2</pre></td>
-    <td align="left" class="src coveredLine"><pre>        os &lt;&lt; "RGBN{r=" &lt;&lt; unsigned(rgb.r) &lt;&lt;  ", g=" &lt;&lt; unsigned(rgb.g) &lt;&lt; ", b=" &lt;&lt; unsigned(rgb.b) &lt;&lt; ", n=" &lt;&lt; unsigned(rgb.n) &lt;&lt; "}";</pre></td>
+    <td align="left" class="src coveredLine"><pre>        os &lt;&lt; "RGBN{r=" &lt;&lt; static_cast&lt;unsigned>(rgb.r)</pre></td>
     </tr>
 
     <tr>
     <td align="right" class="lineno"><pre>17</pre></td>
     <td align="right" class="linebranch"></td>
     <td align="right" class="linecount coveredLine"><pre>2</pre></td>
-    <td align="left" class="src coveredLine"><pre>        return os;</pre></td>
+    <td align="left" class="src coveredLine"><pre>            &lt;&lt; ", g=" &lt;&lt; static_cast&lt;unsigned>(rgb.g)</pre></td>
     </tr>
 
     <tr>
     <td align="right" class="lineno"><pre>18</pre></td>
+    <td align="right" class="linebranch"></td>
+    <td align="right" class="linecount coveredLine"><pre>2</pre></td>
+    <td align="left" class="src coveredLine"><pre>            &lt;&lt; ", b=" &lt;&lt; static_cast&lt;unsigned>(rgb.b)</pre></td>
+    </tr>
+
+    <tr>
+    <td align="right" class="lineno"><pre>19</pre></td>
+    <td align="right" class="linebranch"></td>
+    <td align="right" class="linecount coveredLine"><pre>2</pre></td>
+    <td align="left" class="src coveredLine"><pre>            &lt;&lt; ", n=" &lt;&lt; static_cast&lt;unsigned>(rgb.n) &lt;&lt; "}";</pre></td>
+    </tr>
+
+    <tr>
+    <td align="right" class="lineno"><pre>20</pre></td>
+    <td align="right" class="linebranch"></td>
+    <td align="right" class="linecount coveredLine"><pre>2</pre></td>
+    <td align="left" class="src coveredLine"><pre>        return os;</pre></td>
+    </tr>
+
+    <tr>
+    <td align="right" class="lineno"><pre>21</pre></td>
     <td align="right" class="linebranch"></td>
     <td align="right" class="linecount "><pre></pre></td>
     <td align="left" class="src "><pre>    }</pre></td>
     </tr>
 
     <tr>
-    <td align="right" class="lineno"><pre>19</pre></td>
+    <td align="right" class="lineno"><pre>22</pre></td>
     <td align="right" class="linebranch"></td>
     <td align="right" class="linecount "><pre></pre></td>
     <td align="left" class="src "><pre>}</pre></td>
