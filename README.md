@@ -15,10 +15,9 @@ those who prefer that.
 Each release contains tar files with headers and library files which can be linked to your project.
 
 ### CMake Subdirectory
-When included in a CMake project, this library will export a few variables:
-* `BLINK1_LIB_INCLUDES` - include files for accessing library headers
-* `BLINK1_LIB_LIBRARIES` - libraries that need to be added to any target that interfaces with an actual blink(1) device
-* `BLINK1_LIB_TESTING_LIBRARIES` - libraries used for testing - see below
+There are two main targets created:
+* `blink1` - The main library
+* `blink1-testing` - The testing library (see below)
 
 Example usage:
 ```cmake
@@ -27,10 +26,9 @@ Example usage:
 add_definitions(-DUSE_HIDAPI)  # blink1-tool requires either USE_HIDAPI or USE_HIDDATA to be set
                                # USE_HIDAPI is the default - see todbot/blink1-tool for more info
 add_subdirectory(path/to/blink1-lib)
-include_directories(${BLINK1_LIB_INCLUDES})
 
-target_link_libraries(${EXECUTABLE_NAME} ${BLINK1_LIB_LIBRARIES})
-target_link_libraries(${TEST_EXECUTABLE_NAME} ${BLINK1_LIB_TESTING_LIBRARIES})
+target_link_libraries(${EXECUTABLE_NAME} blink1)
+target_link_libraries(${TEST_EXECUTABLE_NAME} blink1-testing)
 ```
 
 By default, when this library is built as a subdirectory, it will build static libraries.

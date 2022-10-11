@@ -56,10 +56,10 @@ set(SOURCES
 set(CXX_STANDARD_REQUIRED yes)
 
 add_library(blink1 ${LIBRARY_TYPE} ${SOURCES})
-add_library(blink1-testing ${LIBRARY_TYPE} ${SOURCE_DIR}/Blink1TestingLibrary.cpp)
-set(LIBRARIES blink1)
+add_library(blink1-testing ${LIBRARY_TYPE} ${SOURCES} ${SOURCE_DIR}/Blink1TestingLibrary.cpp)
 
 set_property(TARGET blink1 PROPERTY CXX_STANDARD 20)
+set_property(TARGET blink1-testing PROPERTY CXX_STANDARD 20)
 
 ###############
 # BLINK1-TOOL #
@@ -78,11 +78,10 @@ add_library(libblink1 STATIC IMPORTED GLOBAL)
 set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
 
+add_dependencies(blink1 libblink1)
+
 target_include_directories(blink1 ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
 target_include_directories(blink1-testing ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
-
-set(TESTING_LIBRARIES ${LIBRARIES} blink1-testing)
-set(LIBRARIES ${LIBRARIES} libblink1)
 
 if(NOT HAS_PARENT)
 
@@ -124,7 +123,7 @@ if(NOT HAS_PARENT)
 
     enable_testing()
     add_executable(${TEST_EXECUTABLE_NAME} ${TEST_SOURCES})
-    target_link_libraries(${TEST_EXECUTABLE_NAME} ${TESTING_LIBRARIES} gtest gtest_main gmock gmock_main)
+    target_link_libraries(${TEST_EXECUTABLE_NAME} blink1-testing gtest gtest_main gmock gmock_main)
     gtest_discover_tests(${TEST_EXECUTABLE_NAME})
     set_property(TARGET ${TEST_EXECUTABLE_NAME} PROPERTY CXX_STANDARD 20)
 
@@ -179,11 +178,4 @@ if(NOT HAS_PARENT)
         message(STATUS "IPO/LTO not supported")
     endif()
 
-else()
-    ###########
-    # EXPORTS #
-    ###########
-    set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
-    set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
-    set(BLINK1_LIB_TESTING_LIBRARIES ${TESTING_LIBRARIES} PARENT_SCOPE)
 endif(NOT HAS_PARENT)
