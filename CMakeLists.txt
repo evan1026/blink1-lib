@@ -28,6 +28,12 @@ endif()
 
 message("-- blink1-lib library type: ${LIBRARY_TYPE}")
 
+if (HAS_PARENT)
+    set(INCLUDE_DIR_SYSTEM SYSTEM)
+else(HAS_PARENT)
+    set(INCLUDE_DIR_SYSTEM "")
+endif(HAS_PARENT)
+
 ##############
 # BLINK1-LIB #
 ##############
@@ -71,7 +77,9 @@ add_custom_target(libblink1_target DEPENDS ${LIB_BLINK1_LOC})
 add_library(libblink1 STATIC IMPORTED GLOBAL)
 set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
-include_directories(${INCLUDES})
+
+target_include_directories(blink1 ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
+target_include_directories(blink1-testing ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
 
 set(TESTING_LIBRARIES ${LIBRARIES} blink1-testing)
 set(LIBRARIES ${LIBRARIES} libblink1)
@@ -178,15 +186,4 @@ else()
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
     set(BLINK1_LIB_TESTING_LIBRARIES ${TESTING_LIBRARIES} PARENT_SCOPE)
-
-    target_include_directories(
-        blink1
-        SYSTEM INTERFACE
-        "$<BUILD_INTERFACE:${INCLUDES}>"
-    )
-    target_include_directories(
-        blink1-testing
-        SYSTEM INTERFACE
-        "$<BUILD_INTERFACE:${INCLUDES}>"
-    )
 endif(NOT HAS_PARENT)
