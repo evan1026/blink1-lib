@@ -26,7 +26,7 @@ else()
     message(FATAL_ERROR "Must set exactly 1 of BLINK1_LIB_BUILD_SHARED or BLINK1_LIB_BUILD_STATIC, or neither of them.")
 endif()
 
-message("-- Library type: ${LIBRARY_TYPE}")
+message("-- blink1-lib library type: ${LIBRARY_TYPE}")
 
 ##############
 # BLINK1-LIB #
@@ -178,4 +178,15 @@ else()
     set(BLINK1_LIB_INCLUDES ${INCLUDES} PARENT_SCOPE)
     set(BLINK1_LIB_LIBRARIES ${LIBRARIES} PARENT_SCOPE)
     set(BLINK1_LIB_TESTING_LIBRARIES ${TESTING_LIBRARIES} PARENT_SCOPE)
+
+    target_include_directories(
+        blink1
+        SYSTEM INTERFACE
+        "$<BUILD_INTERFACE:${INCLUDES}>"
+    )
+    target_include_directories(
+        blink1-testing
+        SYSTEM INTERFACE
+        "$<BUILD_INTERFACE:${INCLUDES}>"
+    )
 endif(NOT HAS_PARENT)
