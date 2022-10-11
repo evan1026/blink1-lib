@@ -21,16 +21,12 @@ There are two main targets created:
 
 Example usage:
 ```cmake
-...
-
 add_definitions(-DUSE_HIDAPI)  # blink1-tool requires either USE_HIDAPI or USE_HIDDATA to be set
                                # USE_HIDAPI is the default - see todbot/blink1-tool for more info
 add_subdirectory(path/to/blink1-lib)
 
 target_link_libraries(${EXECUTABLE_NAME} blink1)
 target_link_libraries(${TEST_EXECUTABLE_NAME} blink1-testing)
-
-...
 ```
 
 By default, when this library is built as a subdirectory, it will build static libraries.
@@ -39,8 +35,6 @@ This behavior can be changed by setting the `BLINK1_LIB_BUILD_SHARED` option.
 ### CPM
 Including with CPM is much the same as adding the library as a subdirectory, but CPM manages downloading it:
 ```cmake
-...
-
 add_definitions(-DUSE_HIDAPI)
 
 CPMAddPackage(
@@ -51,23 +45,16 @@ CPMAddPackage(
 
 target_link_libraries(${EXECUTABLE_NAME} blink1)
 target_link_libraries(${TEST_EXECUTABLE_NAME} blink1-testing)
-
-...
 ```
 
 To use the latest development version:
 ```cmake
-...
-
-
 CPMAddPackage(
   NAME blink1-lib
   GITHUB_REPOSITORY evan1026/blink1-lib
   VERSION latest
   GIT_TAG latest
 )
-
-...
 ```
 
 ## Testing Library
