@@ -78,7 +78,7 @@ add_library(libblink1 STATIC IMPORTED GLOBAL)
 set_target_properties(libblink1 PROPERTIES IMPORTED_LOCATION ${LIB_BLINK1_LOC})
 add_dependencies(libblink1 libblink1_target)
 
-add_dependencies(blink1 libblink1)
+target_link_libraries(blink1 libblink1)
 
 target_include_directories(blink1 ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
 target_include_directories(blink1-testing ${INCLUDE_DIR_SYSTEM} PUBLIC ${INCLUDES})
