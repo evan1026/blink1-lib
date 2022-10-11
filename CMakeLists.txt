@@ -159,7 +159,7 @@ if(NOT HAS_PARENT)
         add_definitions(-DDEBUG_PRINTF)
 
         set_target_properties(
-            ${EXECUTABLE_NAME}
+            blink1
             PROPERTIES
                 CXX_CLANG_TIDY "clang-tidy"
         )

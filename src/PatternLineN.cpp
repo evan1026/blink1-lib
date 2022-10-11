@@ -14,7 +14,7 @@ namespace blink1_lib {
     }
 
     std::ostream& operator<<(std::ostream& os, const PatternLineN& patternLine) {
-        os << "PatternLine{rgbn=" << patternLine.rgbn << ", fadeMillis=" << unsigned(patternLine.fadeMillis) << "}";
+        os << "PatternLine{rgbn=" << patternLine.rgbn << ", fadeMillis=" << static_cast<unsigned>(patternLine.fadeMillis) << "}";
         return os;
     }
 }

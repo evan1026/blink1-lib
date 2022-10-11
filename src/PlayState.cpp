@@ -20,10 +20,10 @@ namespace blink1_lib {
     std::ostream& operator<<(std::ostream& os, const PlayState& playState) {
         os << "PlayState{"
             << "playing="     << (playState.playing ? "true" : "false")
-            << ", playStart=" << unsigned(playState.playStart)
-            << ", playEnd="   << unsigned(playState.playEnd)
-            << ", playCount=" << unsigned(playState.playCount)
-            << ", playPos="   << unsigned(playState.playPos)
+            << ", playStart=" << static_cast<unsigned>(playState.playStart)
+            << ", playEnd="   << static_cast<unsigned>(playState.playEnd)
+            << ", playCount=" << static_cast<unsigned>(playState.playCount)
+            << ", playPos="   << static_cast<unsigned>(playState.playPos)
             << "}";
         return os;
     }

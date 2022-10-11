@@ -13,7 +13,10 @@ namespace blink1_lib {
     }
 
     std::ostream& operator<<(std::ostream& os, const RGBN& rgb) {
-        os << "RGBN{r=" << unsigned(rgb.r) <<  ", g=" << unsigned(rgb.g) << ", b=" << unsigned(rgb.b) << ", n=" << unsigned(rgb.n) << "}";
+        os << "RGBN{r=" << static_cast<unsigned>(rgb.r)
+            << ", g=" << static_cast<unsigned>(rgb.g)
+            << ", b=" << static_cast<unsigned>(rgb.b)
+            << ", n=" << static_cast<unsigned>(rgb.n) << "}";
         return os;
     }
 }
