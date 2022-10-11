@@ -67,7 +67,7 @@ or to test your program's behavior under special cases that are hard to recreate
 with a real device.
 
 In order to use this library, include `Blink1TestingLibrary.hpp` in your test case
-and make sure you link against `${BLINK1_LIB_TESTING_LIBRARIES}`.
+and make sure you link against `blink1-testing`.
 
 Further information about the library's features can be found [here](https://evan1026.github.io/blink1-lib/docs/namespacefake__blink1__lib.html).
 
