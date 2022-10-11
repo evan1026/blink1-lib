@@ -1,6 +1,6 @@
 blink1-lib
 ==========
-[![build](https://github.com/evan1026/blink1-lib/actions/workflows/ccpp.yml/badge.svg?branch=master)](https://github.com/evan1026/blink1-lib/actions/workflows/ccpp.yml)
+[![Build](https://github.com/evan1026/blink1-lib/actions/workflows/build.yml/badge.svg)](https://github.com/evan1026/blink1-lib/actions/workflows/build.yml)
 
 This project is a C++ wrapper that uses classes and RAII principles to simplify
 development of C++ code that interfaces with the [blink(1)](https://blink1.thingm.com/)
